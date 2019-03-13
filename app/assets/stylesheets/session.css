@@ -1,0 +1,34 @@
+#main h2, #main form{
+  margin: 0 auto;
+}
+
+#main form {
+  padding: 20px 0;
+}
+
+#main form .field {
+  margin-bottom: 7px;
+}
+
+#main form .field input {
+  min-width: 250px;
+  width: inherit;
+}
+
+#main h2 {
+  color: #45b1e2;
+}
+
+#main form .actions input {
+  border: 1px solid #45b1e2;
+  border-radius: 4px;
+  background-color: #45b1e2;
+  color: white;
+  font-size: 14px;
+}
+
+#main form .actions input:hover {
+  color: #45b1e2;
+  background-color: white;
+  border: 1px solid grey;
+}
