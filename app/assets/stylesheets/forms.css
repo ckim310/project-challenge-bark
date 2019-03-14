@@ -1,0 +1,27 @@
+#main form.simple_form {
+  display: flex;
+  height: 170px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#main form .input {
+  display: flex;
+}
+
+#main form .input label {
+  margin-right: 10px;
+}
+
+#main form input.btn {
+  color: white;
+  font-size: 16px;
+  background-color: #45b1e2;
+  border-radius: 4px;
+  border: 1px solid #45b1e2;
+}
+
+#main form input.btn:hover {
+  color: #45b1e2;
+  background-color: white;
+}
