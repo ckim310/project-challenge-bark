@@ -4,6 +4,10 @@
   justify-content: center;
 }
 
-#main div, #main .pagination {
+#main div, #main .pagination, #main img {
   margin: 0 auto;
+}
+
+#main img.ad {
+  width: 300px;
 }
