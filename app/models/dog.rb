@@ -21,7 +21,6 @@ class Dog < ApplicationRecord
 
   has_many :likes
 
-  # self.per_page = 5
+  # gem 'order_as_specified' for active record to specify order
   extend OrderAsSpecified
-
 end

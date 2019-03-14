@@ -6,7 +6,6 @@ class DogsController < ApplicationController
   def index
     # add paginate to update index query to only pick up 5 dogs on each page
     # @dogs = Dog.paginate(:page => params[:page], :per_page => 5)
-    
 
     @all_dogs = Dog.all
 
@@ -17,38 +16,41 @@ class DogsController < ApplicationController
     end
 
     @dogs_sorted = []
-    i = 0
+    @no_likes = []
     
+    i = 0
     while i < @dog_likes.length
       if @dog_likes.length == 1
         @dogs_sorted.push(@all_dogs[i])
         break
       end
-
-      j = i + 1
-      while j < @dog_likes.length
-    
-        if @dog_likes[i] > @dog_likes[j]
-          @dogs_sorted.unshift(@all_dogs[i])
-          if j == @dog_likes.length - 1
+      
+      if @dog_likes[i] == 0
+        @no_likes.push(@all_dogs[i])
+      else
+        j = i + 1
+        while j < @dog_likes.length
+          if @dog_likes[i] > @dog_likes[j]
+            @dogs_sorted.unshift(@all_dogs[i])
+            if @dog_likes[j] != 0
+              @dogs_sorted.push(@all_dogs[j])  
+            end 
+            break
+          elsif @dog_likes[i] < @dog_likes[j]
             @dogs_sorted.push(@all_dogs[j])
-          end
-      
-          break
-        elsif @dog_likes[i] < @dog_likes[j]
-          if j == @dog_likes.length - 1
-            @dogs_sorted.unshift(@all_dogs[j])
-          end
-          @dogs_sorted.push(@all_dogs[i])
-      
-          break
-        end
+            @dogs_sorted.push(@all_dogs[i])
 
-        j += 1
+            break
+          end
+
+          j += 1
+        end
       end
 
       i += 1
     end
+
+    @dogs_sorted.concat(@no_likes)
 
     @dogs = Dog.order_as_specified(:id => @dogs_sorted.each{|dog| dog.id}).paginate(:page => params[:page], :per_page => 5)
 
