@@ -15,8 +15,12 @@ class DogsController < ApplicationController
       likes = dog.likes.where('created_at BETWEEN ? AND ?', hour_ago, current_time).length || 0
     end
 
+
     @dogs_sorted = []
+    # keep track of 0 likes in the last hour to append to end of all dogs_sorted array
     @no_likes = []
+    # keep track of dogs with the most likes
+    @max_likes= []
     
     i = 0
     while i < @dog_likes.length
@@ -29,18 +33,24 @@ class DogsController < ApplicationController
         @no_likes.push(@all_dogs[i])
       else
         j = i + 1
+        current_most_likes = @dog_likes.max
         while j < @dog_likes.length
           if @dog_likes[i] > @dog_likes[j]
-            @dogs_sorted.unshift(@all_dogs[i])
+            if @dog_likes[i] == current_most_likes
+              @max_likes.unshift(@all_dogs[i])
+            else
+              @dogs_sorted.unshift(@all_dogs[i])
+            end
             if @dog_likes[j] != 0
               @dogs_sorted.push(@all_dogs[j])  
             end 
-            break
           elsif @dog_likes[i] < @dog_likes[j]
-            @dogs_sorted.push(@all_dogs[j])
+            if @dog_likes[j] == current_most_likes
+              @max_likes.unshift(@all_dogs[j])
+            else
+              @dogs_sorted.push(@all_dogs[j])
+            end
             @dogs_sorted.push(@all_dogs[i])
-
-            break
           end
 
           j += 1
@@ -50,7 +60,8 @@ class DogsController < ApplicationController
       i += 1
     end
 
-    @dogs_sorted.concat(@no_likes)
+    # add all arrays together to have array of dog objects in order of most likes in last hour
+    @dogs_sorted = @max_likes + @dogs_sorted + @no_likes
 
     @dogs = Dog.order_as_specified(:id => @dogs_sorted.each{|dog| dog.id}).paginate(:page => params[:page], :per_page => 5)
 
