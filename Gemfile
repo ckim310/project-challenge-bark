@@ -43,6 +43,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem to paginate dogs index page to 5 dogs per page
 gem 'will_paginate', '~> 3.1.0'
 
+# gem to order active record in order of sorting likes in last hour
+gem 'order_as_specified'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

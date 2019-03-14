@@ -4,9 +4,54 @@ class DogsController < ApplicationController
   # GET /dogs
   # GET /dogs.json
   def index
-    # @dogs = Dog.all
     # add paginate to update index query to only pick up 5 dogs on each page
-    @dogs = Dog.paginate(:page => params[:page])
+    # @dogs = Dog.paginate(:page => params[:page], :per_page => 5)
+    
+
+    @all_dogs = Dog.all
+
+    @dog_likes = @all_dogs.map do |dog|
+      current_time = DateTime.now
+      hour_ago = DateTime.now - 1.hour
+      likes = dog.likes.where('created_at BETWEEN ? AND ?', hour_ago, current_time).length || 0
+    end
+
+    @dogs_sorted = []
+    i = 0
+    
+    while i < @dog_likes.length
+      if @dog_likes.length == 1
+        @dogs_sorted.push(@all_dogs[i])
+        break
+      end
+
+      j = i + 1
+      while j < @dog_likes.length
+    
+        if @dog_likes[i] > @dog_likes[j]
+          @dogs_sorted.unshift(@all_dogs[i])
+          if j == @dog_likes.length - 1
+            @dogs_sorted.push(@all_dogs[j])
+          end
+      
+          break
+        elsif @dog_likes[i] < @dog_likes[j]
+          if j == @dog_likes.length - 1
+            @dogs_sorted.unshift(@all_dogs[j])
+          end
+          @dogs_sorted.push(@all_dogs[i])
+      
+          break
+        end
+
+        j += 1
+      end
+
+      i += 1
+    end
+
+    @dogs = Dog.order_as_specified(:id => @dogs_sorted.each{|dog| dog.id}).paginate(:page => params[:page], :per_page => 5)
+
   end
 
   # GET /dogs/1

@@ -21,5 +21,7 @@ class Dog < ApplicationRecord
 
   has_many :likes
 
-  self.per_page = 5
+  # self.per_page = 5
+  extend OrderAsSpecified
+
 end

@@ -1,6 +1,19 @@
-<a href="<%= url_for(dog) %>">
-  <article>
-    <h2 class="dog-name"><%= dog.name %></h2>
-    <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
-  </article>
-</a>
+<div class="dog-index">
+  <a href="<%= url_for(dog) %>">
+    <article>
+      <h2 class="dog-name"><%= dog.name %></h2>
+      <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
+    </article>
+  </a>
+  
+  <% current_time = DateTime.now %>
+  <% hour_ago = DateTime.now - 1.hour %>
+  <h3 class="dog-like-count">
+    <% like_count = dog.likes.where('created_at BETWEEN ? AND ?', hour_ago, current_time).length %>
+    <% if like_count == 1 %>
+      <%= like_count %> like in the last hour
+    <% else %>
+      <%= like_count %> likes in the last hour
+    <% end %>
+  </h3>
+</div>
