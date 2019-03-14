@@ -1,0 +1,8 @@
+#main section {
+  margin: 0 auto;
+}
+
+#main section .dog-images {
+  display: flex;
+  flex-direction: column;
+}

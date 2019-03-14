@@ -1,9 +1,11 @@
 <section>
   <h2><%= @dog.name %></h2>
 
-  <% @dog.images.each do |image| %>
-    <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-  <% end %>
+  <div class="dog-images">
+    <% @dog.images.each do |image| %>
+      <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
+    <% end %>
+  </div>
 
   <p><%= @dog.description %></p>
 
