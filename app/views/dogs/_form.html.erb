@@ -2,7 +2,9 @@
   <%= f.input :name %>
   <%= f.input :description, as: :text %>
   <%= f.input :images, as: :file, :input_html => { multiple: true } %>
-  <% f.input :owner_id, as: :text, :input_html => { value: "#{current_user.id}" } %>
+  <% if current_user %>
+    <% f.input :owner_id, as: :text, :input_html => { value: "#{current_user.id}" } %>
+  <% end %>
   
 
   <% if @dog.images.any? %>

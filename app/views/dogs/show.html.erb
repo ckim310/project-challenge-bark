@@ -22,5 +22,7 @@
         <%= link_to "Like #{@dog.name}", dog_likes_path(@dog), method: :post %>
       <% end %>
     <% end %>
+  <% else %>
+    <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>
 </section>
