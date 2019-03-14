@@ -4,6 +4,6 @@
   justify-content: center;
 }
 
-#main a, #main .pagination {
+#main div, #main .pagination {
   margin: 0 auto;
 }
